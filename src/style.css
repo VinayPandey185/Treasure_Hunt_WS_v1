@@ -1,0 +1,48 @@
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  background: linear-gradient(to right, #9c27b0, #8ecdff);
+  font-family: sans-serif;
+}
+.pincode-form {
+  text-align: center;
+  padding: 50px;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background: darkgreen;
+}
+
+#clue-message {
+  text-align: center;
+  padding: 20px;
+}
+.heading{
+color:orange;
+}
+
+/* Add this to your existing CSS file */
+.team-name {
+  color: blue;
+}
+

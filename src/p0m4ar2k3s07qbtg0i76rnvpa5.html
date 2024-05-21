@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Treasure Hunt Clue - Page 5</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pincode-form {
+            font-family: Arial, sans-serif;
+        }
+
+        .team-name-text, .clue-text {
+            font-size: 1.5em;
+            display: inline-block;
+        }
+
+        .team-name {
+            color: blue;
+            font-size: 1.5em;
+            display: inline-block;
+        }
+
+        .clue-text {
+            font-size: 1.5em;
+            margin-left: 10px;
+            color: black; /* Set clue text color to black */
+        }
+
+        .clue-text span {
+            color: white; /* Set span inside clue text to white */
+            text-shadow: 2px 2px blue; /* Add blue shadow */
+        }
+    </style>
+</head>
+<body>
+<div class="pincode-form">
+    <h1 class="heading">TALASH-E-GUMSHUDA</h1>
+    <br><br>
+    <h3>Please Enter Your Pincode</h3>
+    <input type="text" id="pincode-input" placeholder="Enter Pincode">
+    <button onclick="fetchClue()">Get Clue</button>
+</div>
+
+<div id="clue-message"></div>
+
+<script>
+const PORT = 3002;
+const validPincodes = [107722, 927696, 901458, 785746, 797148, 885734];
+
+function fetchClue() {
+  const pincodeInput = document.getElementById("pincode-input");
+  const clueMessage = document.getElementById("clue-message");
+
+  const pincode = pincodeInput.value.trim();
+
+  if (!pincode || isNaN(pincode)) {
+    clueMessage.innerHTML = "Please enter a valid numeric pincode.";
+    return;
+  }
+
+  if (validPincodes.includes(parseInt(pincode))) {
+    fetch(`http://localhost:${PORT}/clue?pincode=${pincode}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return response.text().then((text) => { throw new Error(text); });
+        }
+      })
+      .then((data) => {
+        clueMessage.innerHTML = `<span class="team-name-text">Team Name:</span>
+    <span class="team-name">${data.team_name}</span>
+    <br><br>
+    <span class="team-name-text">Location ID: <span class="team-name">${data.room_id}</span></span>
+    <br><br>
+    <span class="clue-text">Clue: <span>${data.clue}</span></span>`;
+       })
+      .catch((error) => {
+        clueMessage.innerHTML = `Error: ${error.message}`;
+      });
+  } else {
+    clueMessage.innerHTML = "Invalid pincode. Please enter a valid pincode number.";
+  }
+}
+</script>
+</body>
+</html>
